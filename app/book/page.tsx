@@ -19,21 +19,27 @@ export default function BookPage() {
             Choose the service you would like to book.
           </p>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            <div className="rounded-3xl border border-[#DDD6CF] bg-white p-7">
-              <h2 className="font-display text-2xl">Personal Training</h2>
-              <p className="mt-3 leading-7 text-stone-600">
-                One-to-one strength and fitness sessions tailored to your goals.
-              </p>
-            </div>
+          <a href="/book/personal-training" className="block rounded-3xl border border-[#DDD6CF] bg-white p-7 transition hover:-translate-y-1 hover:shadow-md">
+          <h2 className="font-display text-2xl">Personal Training</h2>
+          <p className="mt-3 leading-7 text-stone-600">
+          One-to-one strength and fitness sessions tailored to your goals.
+          </p>
+          <p className="mt-6 text-sm font-medium text-[#6B7A6B]">
+          View availability →
+          </p>
+          </a>
 
-            <div className="rounded-3xl border border-[#DDD6CF] bg-white p-7">
-              <h2 className="font-display text-2xl">Sports Therapy</h2>
-              <p className="mt-3 leading-7 text-stone-600">
-                Assessment, treatment and recovery support for aches, injuries
-                and movement issues.
-              </p>
-            </div>
+          <a href="/book/sports-therapy" className="block rounded-3xl border border-[#DDD6CF] bg-white p-7 transition hover:-translate-y-1 hover:shadow-md">
+          <h2 className="font-display text-2xl">Sports Therapy</h2>
+          <p className="mt-3 leading-7 text-stone-600">
+          Assessment, treatment and recovery support for aches, injuries
+          and movement issues.
+          </p>
+
+          <p className="mt-6 text-sm font-medium text-[#6B7A6B]">
+          View availability →
+          </p>
+          </a>
 
             <div className="rounded-3xl border border-[#DDD6CF] bg-white p-7">
               <h2 className="font-display text-2xl">Barre</h2>
@@ -50,7 +56,6 @@ export default function BookPage() {
               </p>
             </div>
           </div>
-        </div>
       </section>
     </main>
   );

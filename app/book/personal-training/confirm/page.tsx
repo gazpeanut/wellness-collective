@@ -1,16 +1,31 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import Header from "@/components/Header";
 
-type ConfirmPageProps = {
-  searchParams: Promise<{
-    slot?: string;
-  }>;
-};
+export default function ConfirmPage() {
+  const searchParams = useSearchParams();
+  const selectedSlot =
+    searchParams.get("slot") ?? "No appointment selected";
 
-export default async function ConfirmPage({
-  searchParams,
-}: ConfirmPageProps) {
-  const params = await searchParams;
-  const selectedSlot = params.slot ?? "No appointment selected";
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+
+  const formIsComplete =
+    name.trim() !== "" &&
+    email.trim() !== "" &&
+    phone.trim() !== "";
+
+  function handleConfirmBooking() {
+    if (!formIsComplete) {
+      return;
+    }
+
+    setBookingConfirmed(true);
+  }
 
   return (
     <main className="min-h-screen bg-[#F8F6F3] text-[#1F1F1F]">
@@ -27,7 +42,7 @@ export default async function ConfirmPage({
           </h1>
 
           <p className="mt-6 text-lg leading-8 text-stone-600">
-            Please check the appointment details below.
+            Please check your appointment and enter your details below.
           </p>
 
           <div className="mt-10 rounded-3xl border border-[#DDD6CF] bg-white p-7">
@@ -43,6 +58,95 @@ export default async function ConfirmPage({
               Personal Training
             </p>
           </div>
+
+          {!bookingConfirmed ? (
+            <div className="mt-8 rounded-3xl border border-[#DDD6CF] bg-white p-7">
+              <h2 className="font-display text-3xl">
+                Your details
+              </h2>
+
+              <div className="mt-6 space-y-5">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-2 block text-sm font-medium"
+                  >
+                    Full name
+                  </label>
+
+                  <input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    className="w-full rounded-2xl border border-[#CFC8C1] bg-[#F8F6F3] px-4 py-3 outline-none focus:border-[#6B7A6B]"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-sm font-medium"
+                  >
+                    Email address
+                  </label>
+
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    className="w-full rounded-2xl border border-[#CFC8C1] bg-[#F8F6F3] px-4 py-3 outline-none focus:border-[#6B7A6B]"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="mb-2 block text-sm font-medium"
+                  >
+                    Phone number
+                  </label>
+
+                  <input
+                    id="phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                    className="w-full rounded-2xl border border-[#CFC8C1] bg-[#F8F6F3] px-4 py-3 outline-none focus:border-[#6B7A6B]"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleConfirmBooking}
+                disabled={!formIsComplete}
+                className="mt-8 rounded-full bg-[#6B7A6B] px-7 py-3.5 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Confirm booking
+              </button>
+            </div>
+          ) : (
+            <div className="mt-8 rounded-3xl bg-[#E4D9CF] p-7">
+              <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#6B7A6B]">
+                Booking confirmed
+              </p>
+
+              <h2 className="mt-3 font-display text-3xl">
+                You&apos;re booked in.
+              </h2>
+
+              <p className="mt-4 leading-7 text-stone-700">
+                {name}, your Personal Training appointment is booked for{" "}
+                {selectedSlot}.
+              </p>
+
+              <p className="mt-2 leading-7 text-stone-600">
+                We&apos;ll eventually send confirmation details to {email}.
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </main>

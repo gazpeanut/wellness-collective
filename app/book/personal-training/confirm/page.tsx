@@ -12,19 +12,55 @@ export default function ConfirmPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const formIsComplete =
     name.trim() !== "" &&
     email.trim() !== "" &&
     phone.trim() !== "";
 
-  function handleConfirmBooking() {
-    if (!formIsComplete) {
+  async function handleConfirmBooking() {
+    if (!formIsComplete || isSubmitting) {
       return;
     }
 
-    setBookingConfirmed(true);
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          service: "Personal Training",
+          slot: selectedSlot,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Unable to create booking.");
+      }
+
+      setBookingConfirmed(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("Unable to create booking.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -118,13 +154,19 @@ export default function ConfirmPage() {
                 </div>
               </div>
 
+              {errorMessage && (
+                <p className="mt-6 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {errorMessage}
+                </p>
+              )}
+
               <button
                 type="button"
                 onClick={handleConfirmBooking}
-                disabled={!formIsComplete}
+                disabled={!formIsComplete || isSubmitting}
                 className="mt-8 rounded-full bg-[#6B7A6B] px-7 py-3.5 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-40"
               >
-                Confirm booking
+                {isSubmitting ? "Saving booking..." : "Confirm booking"}
               </button>
             </div>
           ) : (

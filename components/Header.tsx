@@ -22,6 +22,10 @@ export default function Header() {
           <a href="/account" className="hover:text-[#6B7A6B]">
             My Account
           </a>
+
+          <a href="/admin" className="hover:text-[#6B7A6B]">
+            Admin
+          </a>
         </nav>
       </div>
     </header>

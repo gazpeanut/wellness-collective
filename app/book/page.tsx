@@ -8,7 +8,7 @@ export default function BookPage() {
       <section className="px-6 py-20">
         <div className="mx-auto max-w-5xl">
           <p className="mb-6 text-sm font-medium uppercase tracking-[0.32em] text-[#6B7A6B]">
-            The Wellness Collective
+            The Collective
           </p>
 
           <h1 className="font-display text-5xl leading-tight">

@@ -13,7 +13,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "The Wellness Collective",
+  title: "The Collective",
   description:
     "Movement, strength, recovery and community for women through every stage of life.",
 };

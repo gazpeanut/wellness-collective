@@ -3,7 +3,7 @@ export default function Header() {
     <header className="border-b border-[#E4D9CF] bg-[#F8F6F3]">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <a href="/" className="font-display text-xl">
-          The Wellness Collective
+          The Collective
         </a>
 
         <nav className="hidden gap-6 text-sm text-stone-600 sm:flex">

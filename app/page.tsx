@@ -8,7 +8,7 @@ export default function Home() {
       <section className="mx-auto flex min-h-[calc(100vh-80px)] max-w-6xl flex-col justify-center px-6 py-20">
         <div className="max-w-4xl">
           <p className="mb-8 text-sm font-medium uppercase tracking-[0.32em] text-[#6B7A6B]">
-            The Wellness Collective
+            The Collective
           </p>
 
           <h1 className="font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
@@ -20,8 +20,7 @@ export default function Home() {
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-8 text-stone-600 sm:text-xl">
-            Movement, strength, recovery and community for women through
-            midlife and beyond.
+            Movement, strength, recovery and wellbeing for women at every stage of life.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -39,7 +38,7 @@ export default function Home() {
             <span>Personal Training</span>
             <span>Pilates</span>
             <span>Sports Therapy</span>
-            <span>Menopause Support</span>
+            <span>Wellness</span>
           </div>
         </div>
       </section>

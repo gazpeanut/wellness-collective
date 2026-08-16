@@ -8,16 +8,16 @@ export default function WellnessPage() {
       <section className="px-6 py-20">
         <div className="mx-auto max-w-4xl">
           <p className="mb-6 text-sm font-medium uppercase tracking-[0.32em] text-[#6B7A6B]">
-            The Wellness Collective
+            The Collective
           </p>
 
           <h1 className="font-display text-5xl leading-tight">
-            Wellness through midlife and beyond.
+            Wellness through every stage of life.
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-8 text-stone-600">
             Practical support for movement, strength, energy, recovery and the
-            changes that can come with menopause.
+            changes that can come at any stage of life.
           </p>
         </div>
       </section>

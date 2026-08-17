@@ -13,5 +13,6 @@ model Booking {
   phone     String
   service   String
   slot      String
+  status    String   @default("Pending")
   createdAt DateTime @default(now())
 }

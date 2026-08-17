@@ -1,3 +1,4 @@
+import BookingStatusControls from "@/components/BookingStatusControls";
 import Header from "@/components/Header";
 import { prisma } from "@/lib/prisma";
 
@@ -62,6 +63,14 @@ export default async function AdminBookingsPage() {
                       <p className="mt-2 text-stone-700">
                         {booking.slot}
                       </p>
+
+                      <span className="mt-4 inline-block rounded-full bg-[#E4D9CF] px-3 py-1 text-xs font-medium text-[#6B7A6B]">
+                        {booking.status}
+                      </span>
+                      <BookingStatusControls
+                        bookingId={booking.id}
+                        currentStatus={booking.status}
+                      />
                     </div>
                   </div>
                 </div>

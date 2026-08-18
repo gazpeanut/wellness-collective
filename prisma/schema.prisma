@@ -7,12 +7,13 @@ datasource db {
 }
 
 model Booking {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  phone     String
-  service   String
-  slot      String
-  status    String   @default("Pending")
-  createdAt DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  name            String
+  email           String
+  phone           String
+  service         String
+  appointmentType String   @default("")
+  slot            String
+  status          String   @default("Pending")
+  createdAt       DateTime @default(now())
 }

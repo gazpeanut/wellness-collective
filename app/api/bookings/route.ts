@@ -5,7 +5,14 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const { name, email, phone, service, slot } = body;
+    const {
+      name,
+      email,
+      phone,
+      service,
+      appointmentType,
+      slot,
+    } = body;
 
     if (!name || !email || !phone || !service || !slot) {
       return NextResponse.json(
@@ -20,6 +27,7 @@ export async function POST(request: Request) {
         email,
         phone,
         service,
+        appointmentType: appointmentType ?? "",
         slot,
       },
     });

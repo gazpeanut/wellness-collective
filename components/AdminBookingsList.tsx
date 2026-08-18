@@ -10,6 +10,7 @@ type Booking = {
   email: string;
   phone: string;
   service: string;
+  appointmentType: string;
   slot: string;
   status: string;
 };
@@ -110,6 +111,12 @@ export default function AdminBookingsList({
                   <p className="font-medium text-[#6B7A6B]">
                     {booking.service}
                   </p>
+
+                  {booking.appointmentType && (
+                    <p className="mt-2 font-medium text-stone-800">
+                      {booking.appointmentType}
+                    </p>
+                  )}
 
                   <p className="mt-2 text-stone-700">
                     {booking.slot}

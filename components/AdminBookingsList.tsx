@@ -18,32 +18,71 @@ type AdminBookingsListProps = {
   bookings: Booking[];
 };
 
+const services = [
+  "All Services",
+  "Personal Training",
+  "Sports Therapy",
+];
+
 export default function AdminBookingsList({
   bookings,
 }: AdminBookingsListProps) {
   const [currentFilter, setCurrentFilter] = useState("All");
+  const [currentService, setCurrentService] = useState("All Services");
 
-  const filteredBookings =
-    currentFilter === "All"
-      ? bookings
-      : bookings.filter(
-          (booking) => booking.status === currentFilter
-        );
+  const filteredBookings = bookings.filter((booking) => {
+    const matchesStatus =
+      currentFilter === "All" ||
+      booking.status === currentFilter;
+
+    const matchesService =
+      currentService === "All Services" ||
+      booking.service === currentService;
+
+    return matchesStatus && matchesService;
+  });
 
   return (
     <>
       <div className="mt-10">
+        <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-[#6B7A6B]">
+          Status
+        </p>
+
         <BookingFilters
           currentFilter={currentFilter}
           onFilterChange={setCurrentFilter}
         />
       </div>
 
+      <div className="mt-6">
+        <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-[#6B7A6B]">
+          Service
+        </p>
+
+        <div className="flex flex-wrap gap-2">
+          {services.map((service) => (
+            <button
+              key={service}
+              type="button"
+              onClick={() => setCurrentService(service)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                currentService === service
+                  ? "bg-[#6B7A6B] text-white"
+                  : "border border-[#CFC8C1] bg-white text-stone-700 hover:border-[#6B7A6B]"
+              }`}
+            >
+              {service}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="mt-8 space-y-5">
         {filteredBookings.length === 0 ? (
           <div className="rounded-3xl border border-[#DDD6CF] bg-white p-7">
             <p className="text-stone-600">
-              No {currentFilter === "All" ? "" : currentFilter.toLowerCase()} bookings found.
+              No bookings match these filters.
             </p>
           </div>
         ) : (

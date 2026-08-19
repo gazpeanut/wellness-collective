@@ -6,8 +6,12 @@ import Header from "@/components/Header";
 
 export default function ConfirmPage() {
   const searchParams = useSearchParams();
+
   const selectedSlot =
     searchParams.get("slot") ?? "No appointment selected";
+
+  const selectedType =
+    searchParams.get("type") ?? "No appointment type selected";
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -41,6 +45,7 @@ export default function ConfirmPage() {
           email,
           phone,
           service: "Sports Therapy",
+          appointmentType: selectedType,
           slot: selectedSlot,
         }),
       });
@@ -87,6 +92,10 @@ export default function ConfirmPage() {
             </p>
 
             <p className="mt-3 font-display text-2xl">
+              {selectedType}
+            </p>
+
+            <p className="mt-2 text-stone-700">
               {selectedSlot}
             </p>
 
@@ -180,8 +189,7 @@ export default function ConfirmPage() {
               </h2>
 
               <p className="mt-4 leading-7 text-stone-700">
-                {name}, your Sports Therapy appointment is booked for{" "}
-                {selectedSlot}.
+                {name}, your {selectedType} is booked for {selectedSlot}.
               </p>
 
               <p className="mt-2 leading-7 text-stone-600">

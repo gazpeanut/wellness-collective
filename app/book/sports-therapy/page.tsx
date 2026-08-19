@@ -18,7 +18,21 @@ const availableSlots = [
   },
 ];
 
+const appointmentTypes = [
+  {
+    name: "Initial Assessment",
+    description:
+      "A full assessment to understand your symptoms, movement, training history and treatment needs.",
+  },
+  {
+    name: "Follow-up Treatment",
+    description:
+      "Ongoing treatment and rehabilitation following your initial assessment.",
+  },
+];
+
 export default function SportsTherapyPage() {
+  const [selectedType, setSelectedType] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
 
   return (
@@ -40,27 +54,24 @@ export default function SportsTherapyPage() {
           </p>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2">
-            <div className="rounded-3xl border border-[#DDD6CF] bg-white p-7">
-              <h2 className="font-display text-2xl">
-                Initial Assessment
-              </h2>
+            {appointmentTypes.map((type) => (
+              <button
+                key={type.name}
+                type="button"
+                onClick={() => setSelectedType(type.name)}
+                className={`rounded-3xl border p-7 text-left transition ${
+                  selectedType === type.name
+                    ? "border-[#6B7A6B] bg-[#E4D9CF]"
+                    : "border-[#DDD6CF] bg-white"
+                }`}
+              >
+                <h2 className="font-display text-2xl">{type.name}</h2>
 
-              <p className="mt-3 leading-7 text-stone-600">
-                A full assessment to understand your symptoms, movement,
-                training history and treatment needs.
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-[#DDD6CF] bg-white p-7">
-              <h2 className="font-display text-2xl">
-                Follow-up Treatment
-              </h2>
-
-              <p className="mt-3 leading-7 text-stone-600">
-                Ongoing treatment and rehabilitation following your initial
-                assessment.
-              </p>
-            </div>
+                <p className="mt-3 leading-7 text-stone-600">
+                  {type.description}
+                </p>
+              </button>
+            ))}
           </div>
 
           <div className="mt-16">
@@ -86,6 +97,7 @@ export default function SportsTherapyPage() {
                     {day.times.map((time) => (
                       <button
                         key={time}
+                        type="button"
                         onClick={() =>
                           setSelectedSlot(`${day.date} at ${time}`)
                         }
@@ -104,18 +116,24 @@ export default function SportsTherapyPage() {
             </div>
           </div>
 
-          {selectedSlot && (
+          {selectedType && selectedSlot && (
             <div className="mt-10 rounded-3xl bg-[#E4D9CF] p-7">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#6B7A6B]">
                 Your selection
               </p>
 
               <p className="mt-3 font-display text-2xl">
+                {selectedType}
+              </p>
+
+              <p className="mt-2 text-stone-700">
                 {selectedSlot}
               </p>
 
               <a
-                href={`/book/sports-therapy/confirm?slot=${encodeURIComponent(selectedSlot)}`}
+                href={`/book/sports-therapy/confirm?slot=${encodeURIComponent(
+                  selectedSlot
+                )}&type=${encodeURIComponent(selectedType)}`}
                 className="mt-6 inline-block rounded-full bg-[#6B7A6B] px-7 py-3.5 text-sm font-medium text-white transition hover:opacity-90"
               >
                 Continue

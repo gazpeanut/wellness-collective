@@ -6,14 +6,17 @@ import Header from "@/components/Header";
 const availableSlots = [
   {
     date: "Monday 17 August",
+    isoDate: "2026-08-17",
     times: ["09:00", "10:30", "14:00"],
   },
   {
     date: "Tuesday 18 August",
+    isoDate: "2026-08-18",
     times: ["08:30", "11:00", "16:30"],
   },
   {
     date: "Thursday 20 August",
+    isoDate: "2026-08-20",
     times: ["09:30", "13:00", "17:00"],
   },
 ];
@@ -34,6 +37,7 @@ const appointmentTypes = [
 export default function PersonalTrainingPage() {
   const [selectedType, setSelectedType] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
+  const [selectedStartTime, setSelectedStartTime] = useState("");
 
   return (
     <main className="min-h-screen bg-[#F8F6F3] text-[#1F1F1F]">
@@ -94,29 +98,35 @@ export default function PersonalTrainingPage() {
                   </h3>
 
                   <div className="mt-5 flex flex-wrap gap-3">
-                    {day.times.map((time) => (
-                      <button
-                        key={time}
-                        type="button"
-                        onClick={() =>
-                          setSelectedSlot(`${day.date} at ${time}`)
-                        }
-                        className={`rounded-full border px-5 py-2.5 text-sm font-medium transition ${
-                          selectedSlot === `${day.date} at ${time}`
-                            ? "border-[#6B7A6B] bg-[#6B7A6B] text-white"
-                            : "border-[#CFC8C1] hover:border-[#6B7A6B] hover:bg-[#6B7A6B] hover:text-white"
-                        }`}
-                      >
-                        {time}
-                      </button>
-                    ))}
+                    {day.times.map((time) => {
+                      const displaySlot = `${day.date} at ${time}`;
+                      const isoStartTime = `${day.isoDate}T${time}:00`;
+
+                      return (
+                        <button
+                          key={time}
+                          type="button"
+                          onClick={() => {
+                            setSelectedSlot(displaySlot);
+                            setSelectedStartTime(isoStartTime);
+                          }}
+                          className={`rounded-full border px-5 py-2.5 text-sm font-medium transition ${
+                            selectedSlot === displaySlot
+                              ? "border-[#6B7A6B] bg-[#6B7A6B] text-white"
+                              : "border-[#CFC8C1] hover:border-[#6B7A6B] hover:bg-[#6B7A6B] hover:text-white"
+                          }`}
+                        >
+                          {time}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {selectedType && selectedSlot && (
+          {selectedType && selectedSlot && selectedStartTime && (
             <div className="mt-10 rounded-3xl bg-[#E4D9CF] p-7">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#6B7A6B]">
                 Your selection
@@ -133,7 +143,9 @@ export default function PersonalTrainingPage() {
               <a
                 href={`/book/personal-training/confirm?slot=${encodeURIComponent(
                   selectedSlot
-                )}&type=${encodeURIComponent(selectedType)}`}
+                )}&type=${encodeURIComponent(
+                  selectedType
+                )}&startTime=${encodeURIComponent(selectedStartTime)}`}
                 className="mt-6 inline-block rounded-full bg-[#6B7A6B] px-7 py-3.5 text-sm font-medium text-white transition hover:opacity-90"
               >
                 Continue

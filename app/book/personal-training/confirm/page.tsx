@@ -13,6 +13,9 @@ export default function ConfirmPage() {
   const selectedType =
     searchParams.get("type") ?? "No session type selected";
 
+  const selectedStartTime =
+    searchParams.get("startTime") ?? "";
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -47,6 +50,7 @@ export default function ConfirmPage() {
           service: "Personal Training",
           appointmentType: selectedType,
           slot: selectedSlot,
+          startTime: selectedStartTime,
         }),
       });
 

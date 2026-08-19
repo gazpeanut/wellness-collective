@@ -1,54 +1,70 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-type RouteContext = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-
-export async function PATCH(
-  request: Request,
-  context: RouteContext
-) {
+export async function POST(request: Request) {
   try {
-    const { id } = await context.params;
     const body = await request.json();
 
-    const { status } = body;
+    const {
+      name,
+      email,
+      phone,
+      service,
+      appointmentType,
+      slot,
+      startTime,
+    } = body;
 
-    const allowedStatuses = [
-      "Pending",
-      "Confirmed",
-      "Completed",
-      "Cancelled",
-    ];
-
-    if (!allowedStatuses.includes(status)) {
+    if (!name || !email || !phone || !service || !slot) {
       return NextResponse.json(
-        { error: "Invalid booking status." },
+        { error: "All booking fields are required." },
         { status: 400 }
       );
     }
 
-    const booking = await prisma.booking.update({
-      where: {
-        id: Number(id),
-      },
+    const booking = await prisma.booking.create({
       data: {
-        status,
+        name,
+        email,
+        phone,
+        service,
+        appointmentType: appointmentType ?? "",
+        slot,
+        startTime: startTime ? new Date(startTime) : null,
       },
     });
-
-    return NextResponse.json({
-      message: "Booking status updated.",
-      booking,
-    });
-  } catch (error) {
-    console.error("Unable to update booking status:", error);
 
     return NextResponse.json(
-      { error: "Unable to update booking status." },
+      {
+        message: "Booking created successfully.",
+        booking,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Booking creation failed:", error);
+
+    return NextResponse.json(
+      { error: "Unable to create booking." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    const bookings = await prisma.booking.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json(bookings);
+  } catch (error) {
+    console.error("Unable to retrieve bookings:", error);
+
+    return NextResponse.json(
+      { error: "Unable to retrieve bookings." },
       { status: 500 }
     );
   }
